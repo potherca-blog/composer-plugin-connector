@@ -11,12 +11,12 @@
  */
 namespace Potherca\Composer\Plugins;
 
-class TestPlugin extends \Potherca\Base\Project implements Composer\Plugin\PluginInterface,  Composer\EventDispatcher\EventSubscriberInterface
+class TestPlugin extends \Potherca\Base\Project implements \Composer\Plugin\PluginInterface,  \Composer\EventDispatcher\EventSubscriberInterface
 {
     private $composer;
     private $io;
 
-    final public function activate(Composer\Composer $composer, Composer\IO\IOInterface $io)
+    final public function activate(\Composer\Composer $composer, \Composer\IO\IOInterface $io)
     {
         $this->composer = $composer;
         $this->io = $io;
@@ -25,17 +25,17 @@ class TestPlugin extends \Potherca\Base\Project implements Composer\Plugin\Plugi
     final public static function getSubscribedEvents()
     {
         return array(
-            Composer\Plugin\PluginEvents::PRE_FILE_DOWNLOAD => 'preFileDownloadHandler',
-            Composer\Plugin\PluginEvents::COMMAND => 'commandHandler',
+            \Composer\Plugin\PluginEvents::PRE_FILE_DOWNLOAD => 'preFileDownloadHandler',
+            \Composer\Plugin\PluginEvents::COMMAND => 'commandHandler',
         );
     }
     
-    final public function preFileDownloadHandler(Composer\Plugin\PreFileDownloadEvent $event)
+    final public function preFileDownloadHandler(\Composer\Plugin\PreFileDownloadEvent $event)
     {
         
     }
 
-    final public function commandHandler(Composer\Plugin\CommandEvent $event)
+    final public function commandHandler(\Composer\Plugin\CommandEvent $event)
     {
         echo 'PLUGIN EVENT: ' . $event->getCommandName();
     }
