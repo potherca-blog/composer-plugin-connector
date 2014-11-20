@@ -18,12 +18,14 @@ class TestPlugin extends \Potherca\Base\Project implements \Composer\Plugin\Plug
 
     final public function activate(\Composer\Composer $composer, \Composer\IO\IOInterface $io)
     {
+        echo 'CALLED: ' . __METHOD__;
         $this->composer = $composer;
         $this->io = $io;
     }
     
     final public static function getSubscribedEvents()
     {
+        echo 'CALLED: ' . __METHOD__;
         return array(
             \Composer\Plugin\PluginEvents::PRE_FILE_DOWNLOAD => 'preFileDownloadHandler',
             \Composer\Plugin\PluginEvents::COMMAND => 'commandHandler',
@@ -32,12 +34,13 @@ class TestPlugin extends \Potherca\Base\Project implements \Composer\Plugin\Plug
     
     final public function preFileDownloadHandler(\Composer\Plugin\PreFileDownloadEvent $event)
     {
-        
+        echo 'CALLED: ' . __METHOD__;        
     }
 
     final public function commandHandler(\Composer\Plugin\CommandEvent $event)
     {
-        echo 'PLUGIN EVENT: ' . $event->getCommandName();
+        echo 'CALLED: ' . __METHOD__;
+        echo 'EVENT: ' . $event->getCommandName();
     }
 /* AVAILABLE AS CLASS CONST IN https://github.com/composer/composer/blob/master/src/Composer/Script/ScriptEvents.php
 
