@@ -11,7 +11,7 @@
  */
 namespace Potherca\Composer\Plugins;
 
-class TestPlugin extends Potherca\Base\Project implements Composer\Plugin\PluginInterface,  Composer\EventDispatcher\EventSubscriberInterface
+class TestPlugin extends \Potherca\Base\Project implements Composer\Plugin\PluginInterface,  Composer\EventDispatcher\EventSubscriberInterface
 {
     private $composer;
     private $io;
