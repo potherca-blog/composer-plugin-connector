@@ -18,20 +18,20 @@
         "potherca/php-base": "~0"
     },
     "require-dev": {
-        "composer/composer": "~1.0",
+        "composer/composer": "~1.0@dev",
         "phpunit/phpunit": "~4.3"
     },
     "autoload": {
         "psr-4": {
             "Potherca\\Composer\\": "src/",
-            "Potherca\\Example\\Composer\\Plugins\\": "example/"
+            "Potherca\\Examples\\Composer\\Plugins\\": "example/"
         }
     },
     "autoload-dev": {
         "psr-4": {"Potherca\\Composer\\": "tests/"}
     },
     "extra": {
-        "class": "Potherca\\Composer\\Plugins\\BasePlugin",
+        "class": "Potherca\\Examples\\Composer\\Plugins\\ExamplePlugin",
         "foo": ["Bar", "Baz"]
     }
 }
