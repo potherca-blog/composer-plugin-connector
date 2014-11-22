@@ -1,6 +1,6 @@
 {
-    "name": "potherca/composer-plugin-test",
-    "description": "Composer Plugin Test",
+    "name": "potherca/composer-base-plugin",
+    "description": "Composer Base Plugin",
     "keywords": ["composer", "composer-plugin"],
     "license": "GPL-3.0+",
     "type": "composer-plugin",
@@ -18,20 +18,9 @@
     },
     "require-dev": {
         "composer/composer": "~1.0",
-        "phpunit/phpunit": "~4.3",
-        "potherca/composer-plugin-test": "@dev"
+        "phpunit/phpunit": "~4.3"
     },
     "autoload": {
         "psr-4": {"Potherca\\Composer\\": "src/"}
-    },
-    "extra": {
-        "class": "Potherca\\Composer\\Plugins\\TestPlugin",
-        "foo": ["Bar", "Baz"]
-    },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "git@bitbucket.org:potherca/composerplugintest.git"
-        }
-    ]
+    }
 }
