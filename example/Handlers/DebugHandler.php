@@ -2,6 +2,12 @@
 
 namespace Potherca\Examples\Composer\Plugins\Handlers;
 
+use Potherca\Composer;
+use Potherca\Composer\Annotations;
+
+/**
+ * @scriptHandler({name=Commands::STATUS})
+ */
 class DebugHandler
 {
     final public function __call($p_sMethodName, $p_aArguments)

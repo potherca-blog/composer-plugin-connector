@@ -16,7 +16,10 @@ use Composer\IO\IOInterface;
 use Composer\Plugin\PluginEvents;
 use Composer\Plugin\PluginInterface;
 use Composer\Script\ScriptEvents;
+use Doctrine\Common\Annotations\AnnotationReader;
+use Doctrine\Common\Annotations\AnnotationRegistry;
 use Potherca\Base\Project;
+use Potherca\Composer\Annotations\Script;
 use Symfony\Component\Console\ConsoleEvents;
 
 class BasePlugin extends Project implements PluginInterface,  EventSubscriberInterface
@@ -35,7 +38,6 @@ class BasePlugin extends Project implements PluginInterface,  EventSubscriberInt
     {
         return $this->m_oComposer;
     }
-
     /**
      * @param Composer $p_oComposer
      */
@@ -61,20 +63,40 @@ class BasePlugin extends Project implements PluginInterface,  EventSubscriberInt
     }
 
     //////////////////////////////// PUBLIC API \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
     final public function activate(Composer $p_oComposer, IOInterface $p_oIo)
     {
         echo 'CALLED: ' . __METHOD__ . PHP_EOL;
         $this->setComposer($p_oComposer);
         $this->setIo($p_oIo);
     }
-
     final public static function getSubscribedEvents()
     {
-        // Find Handler Classes
-        // Register Class For Correct Event
-        // How do we know which event(s) to register a class (or method) for?
+        $oReflectionClass = new \ReflectionClass(static::class);
 
+        $aClasses = self::buildClassList($oReflectionClass);
+        AnnotationRegistry::registerAutoloadNamespace('Potherca\\Composer\\Annotations\\');
+        $reader = new AnnotationReader();
+        //$reader->setDefaultAnnotationNamespace('Potherca\\Composer\\Annotations\\');
+
+
+        foreach ($aClasses as $t_sClass) {
+            if (class_exists($t_sClass)) {
+                $oReflectionClass = new \ReflectionClass($t_sClass);
+                $classAnnotations = $reader->getClassAnnotations($oReflectionClass);
+
+                foreach ($classAnnotations AS $annotation) {
+                    if ($annotation instanceof Script) {
+                        echo '>>> ' . $annotation->name;
+                        echo '>>> ' . $annotation->event;
+                    //} else if ($annotation instanceof \MyCompany\Annotations\Bar) {
+                    //    echo $annotation->foo;
+                    }
+                }
+            }
+        }
         echo '--- CALLED: ' . __METHOD__ . PHP_EOL;
+        echo '--- CLASS: ' . static::class . PHP_EOL;
         $aEventHandlers = array(
             ConsoleEvents::COMMAND => 'consoleCommandEventHandler',
             ConsoleEvents::TERMINATE => 'consoleTerminateEventHandler',
@@ -112,4 +134,32 @@ class BasePlugin extends Project implements PluginInterface,  EventSubscriberInt
     }
 
     ////////////////////////////// UTILITY METHODS \\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+    /**
+     * @param $oReflectionClass
+     *
+     * @return array
+     */
+    private static function buildClassList(\ReflectionClass $oReflectionClass)
+    {
+        $aClasses = array();
+
+        $sNamespaceName = $oReflectionClass->getNamespaceName();
+        $sFileName = $oReflectionClass->getFileName();
+        $sPath = dirname($sFileName);
+        $sPathLength = strlen($sPath);
+        /* Using glob for trolling purposes */
+        $aFiles = glob($sPath . '/*{*,/}{/,*}{*,/}{/,*}{*,/}{/,*}*.php', GLOB_BRACE);
+        foreach ($aFiles as $t_sFile) {
+            $sClassName = substr($t_sFile, $sPathLength, -4);
+            $sClassName = str_replace(array(DIRECTORY_SEPARATOR, '\\\\'), '\\', $sClassName);
+            $sClass = $sNamespaceName . $sClassName;
+            if (in_array($sClass, $aClasses) === false) {
+                $aClasses[] = $sClass;
+            }
+        }
+
+        return $aClasses;
+    }
+
 }

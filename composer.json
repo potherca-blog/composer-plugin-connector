@@ -15,6 +15,7 @@
     "require": {
         "php": ">=5.3",
         "composer-plugin-api": "~1.0",
+        "doctrine/annotations": "~1.2",
         "potherca/php-base": "~0"
     },
     "require-dev": {
