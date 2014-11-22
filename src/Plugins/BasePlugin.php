@@ -72,6 +72,8 @@ class BasePlugin extends Project implements PluginInterface,  EventSubscriberInt
     {
         // Find Handler Classes
         // Register Class For Correct Event
+        // How do we know which event(s) to register a class (or method) for?
+
         echo '--- CALLED: ' . __METHOD__ . PHP_EOL;
         $aEventHandlers = array(
             ConsoleEvents::COMMAND => 'consoleCommandEventHandler',

@@ -3,6 +3,7 @@
     "description": "Composer Base Plugin",
     "keywords": ["composer", "composer-plugin"],
     "license": "GPL-3.0+",
+    "type": "composer-plugin",
     "authors": [
         {
             "name": "Potherca",
@@ -21,9 +22,16 @@
         "phpunit/phpunit": "~4.3"
     },
     "autoload": {
-        "psr-4": {"Potherca\\Composer\\": "src/"}
+        "psr-4": {
+            "Potherca\\Composer\\": "src/",
+            "Potherca\\Example\\Composer\\Plugins\\": "example/"
+        }
     },
     "autoload-dev": {
         "psr-4": {"Potherca\\Composer\\": "tests/"}
+    },
+    "extra": {
+        "class": "Potherca\\Composer\\Plugins\\BasePlugin",
+        "foo": ["Bar", "Baz"]
     }
 }
