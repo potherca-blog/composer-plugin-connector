@@ -3,10 +3,10 @@
     "description": "Composer Base Plugin",
     "keywords": ["composer", "composer-plugin"],
     "license": "GPL-3.0+",
-    "type": "composer-plugin",
     "authors": [
         {
             "name": "Potherca",
+            "homepage": "http://pother.ca",
             "email": "potherca@gmail.com"
         }
     ],
@@ -22,5 +22,8 @@
     },
     "autoload": {
         "psr-4": {"Potherca\\Composer\\": "src/"}
+    },
+    "autoload-dev": {
+        "psr-4": {"Potherca\\Composer\\": "tests/"}
     }
 }
