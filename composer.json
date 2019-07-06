@@ -20,7 +20,7 @@
     },
     "require-dev": {
         "composer/composer": "~1.0@dev",
-        "phpunit/phpunit": "~4.3"
+        "phpunit/phpunit": "4.8.36"
     },
     "autoload": {
         "psr-4": {
