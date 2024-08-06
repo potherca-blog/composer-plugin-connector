@@ -19,7 +19,7 @@
         "potherca/php-base": "~0"
     },
     "require-dev": {
-        "composer/composer": "2.1.9",
+        "composer/composer": "2.2.24",
         "phpunit/phpunit": "9.5.10"
     },
     "autoload": {
